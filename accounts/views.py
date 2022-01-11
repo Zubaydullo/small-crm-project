@@ -10,7 +10,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 
-#Creating views
 from .models import *
 from .forms import OrderForm, CreateUserForm
 from .filters import OrderFilter
@@ -20,9 +19,6 @@ from .decorators import unauthenticated_user, allowed_users, admin_only
 
 @unauthenticated_user
 def registerPage(request):
-	# if request.user.is_authenticated:
-	# 	return redirect('home')
-	# else:
 	form = CreateUserForm()
 	if request.method == 'POST':
 		form = CreateUserForm(request.POST)
@@ -42,9 +38,6 @@ def registerPage(request):
 
 @unauthenticated_user
 def loginPage(request):
-	# if request.user.is_authenticated:
-	# 	return redirect('home')
-	# else:
 	if request.method == 'POST':
 		username = request.POST.get('username')
 		password = request.POST.get('password')
