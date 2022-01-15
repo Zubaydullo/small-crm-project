@@ -8,3 +8,4 @@ admin.site.register(Order)
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ("name", "phone")
+    list_filter = ("date_created",)
