@@ -15,25 +15,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from accounts.models import Customer
+from accounts.models import Order
 from rest_framework import generics
 from rest_framework import serializers
 
+
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Customer
+        model = Order
         fields = "__all__"
 
 
 class CustomerView(generics.ListAPIView):
-    queryset = Customer.objects.all()
+    queryset = Order.objects.all().select_related("customer", "product")
     serializer_class = CustomerSerializer
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
-    path("api/v1/customers", CustomerView.as_view(), name="customer-list")
+    path('__debug__/', include('debug_toolbar.urls')),
+    path("api/v1/customers", CustomerView.as_view(), name="customer-list"),
+
 ]
 
 urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
